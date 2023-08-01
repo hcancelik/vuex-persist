@@ -260,7 +260,11 @@ export class VuexPersistence<S> implements PersistOptions<S> {
 
         this.subscriber(store)((mutation: MutationPayload, state: S) => {
           if (this.filter(mutation)) {
-            this.saveState(this.key, this.reducer(state), this.storage)
+            try {
+              this.saveState(this.key, this.reducer(state), this.storage)
+            } catch (error) {
+              console.error(error);
+            }
           }
         })
 
